@@ -106,9 +106,70 @@ assert(palindromeCheck('racecar') == True)
 assert(palindromeCheck('') == True)
 assert(palindromeCheck('hello') == False)
 
+#1.5 
 
-    
+def editCheck(s1, s2): # O(n)
+    s1Dict = {}
+    editFlag = False
+    if abs(len(s1) - len(s2)) > 1:
+        return False
+    for i in s1:
+        if i not in s1Dict.keys():
+            s1Dict[i] = 1
+        else:
+            s1Dict[i] = s1Dict[i] + 1
+    for i in s2:
+        if i not in s1Dict.keys():
+            if not editFlag:
+                editFlag = True
+            else:
+                return False
+        else:
+            s1Dict[i] = s1Dict[i] -1 
+            if s1Dict[i] == 0:
+                del s1Dict[i]
+    return True 
 
+assert(editCheck('pale','ple') == True)
+assert(editCheck('pales','pale') == True)
+assert(editCheck('pale','bale') == True)
+assert(editCheck('pale', 'bake') == False)
+assert(editCheck('','') == True)
+assert(editCheck('','hello') == False)
+assert(editCheck('hello','') == False)
+assert(editCheck('','a') == True)
+assert(editCheck('a','') == True)
+
+#1.6
+
+def compress(s1):
+    charList = []
+    count = 0
+    compressedString = ''
+    if len(s1) == 0:
+        return s1  
+    for i in s1:
+        charList.append(i)
+    current = charList[-1]
+    while charList:
+        if current != charList[-1]:
+            compressedString = current + str(count) + compressedString
+            current = charList[-1]
+            count = 0
+        else:
+            charList.pop()
+            count = count + 1
+    compressedString = current + str(count) + compressedString
+    if len(compressedString) < len(s1):
+        return compressedString
+    else:
+        return s1
+
+assert(compress('aabcccccaaa') == 'a2b1c5a3')
+assert(compress('a') == 'a')
+assert(compress('') == '')
+
+# I think this is all the string/array realted problems Im currently up for. Will return if extra practice is desired
 
 
     
